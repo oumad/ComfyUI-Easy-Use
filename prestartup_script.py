@@ -1,5 +1,15 @@
-import folder_paths
 import os
+import folder_paths
+from py.libs.folder_paths_cache import apply_filename_list_cache
+
+# Cache filename lookups so we don't repeatedly traverse large model folders
+# (especially remote LoRA directories) during node import. Many nodes call
+# `folder_paths.get_filename_list` while defining their input types, which can
+# otherwise trigger dozens of directory scans and significantly delay the UI
+# from starting. Set EASYUSE_DISABLE_FILENAME_CACHE=1 to restore the original
+# behavior.
+apply_filename_list_cache()
+
 def add_folder_path_and_extensions(folder_name, full_folder_paths, extensions):
     for full_folder_path in full_folder_paths:
         folder_paths.add_model_folder_path(folder_name, full_folder_path)

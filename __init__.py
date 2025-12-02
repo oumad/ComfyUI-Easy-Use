@@ -6,11 +6,15 @@ import os
 import folder_paths
 import importlib
 
+from .py.libs.folder_paths_cache import apply_filename_list_cache
+
 cwd_path = os.path.dirname(os.path.realpath(__file__))
 comfy_path = folder_paths.base_path
 
 NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
+
+apply_filename_list_cache()
 
 importlib.import_module('.py.routes', __name__)
 importlib.import_module('.py.server', __name__)
